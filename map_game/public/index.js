@@ -8,18 +8,22 @@ var textToPage = function(pTag){
   document.body.appendChild(pTag);
 }
 
-var winner = function(countryName){
+var winner = function(countryName, guessMap){
   var winner = "Well Done, You have guessed correctly. It was: " + countryName; 
   var congratulationText = textCreate(winner);
   textToPage(congratulationText);
+  window.onclick = function(){
+    var answer = {lat: 0, lng: 0}
+    guessMap.addClickEvent(answer, false);
+  }
 }
 
 var playGame = function(latLng, guessMap, countryName){
   var correctAnswer = latLng;
   var guess;
   window.onclick = function(){
-    guess = guessMap.addClickEvent(correctAnswer);
-    if(guess) winner(countryName);
+    guess = guessMap.addClickEvent(correctAnswer, true);
+    if(guess) winner(countryName, guessMap);
   }
   
 }

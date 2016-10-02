@@ -19,13 +19,16 @@ Map.prototype = {
       map: this.googleMap
     });
   },
-  addClickEvent: function(correctAnswer){
-    google.maps.event.addListener(this.googleMap, "click", function(event){
-      var position = {lat:event.latLng.lat(), lng:event.latLng.lng()}
-      this.addMarker(position);
-      this.guess = this.isClose(position, correctAnswer);
-    }.bind(this))
-    return this.guess;
+  addClickEvent: function(correctAnswer, can){
+    if(can){
+      console.log(can);
+      google.maps.event.addListener(this.googleMap, "click", function(event){
+        var position = {lat:event.latLng.lat(), lng:event.latLng.lng()}
+        this.addMarker(position);
+        this.guess = this.isClose(position, correctAnswer);
+      }.bind(this))
+      return this.guess;
+    }
    },
   isClose: function(guess, answer){
     var diffLat = Math.abs(guess.lat - answer.lat);
