@@ -6,7 +6,7 @@ var Map = function(container, coords, zoom, scroll){
     disableDefaultUI: true
   });
   this.googleMap.setOptions({draggable: true, zoomControl: scroll, scrollwheel: scroll, disableDoubleClickZoom: true});
-  
+  this.guess = false;
 }
 
 Map.prototype = {
@@ -20,13 +20,23 @@ Map.prototype = {
     });
   },
   addClickEvent: function(correctAnswer){
-       google.maps.event.addListener(this.googleMap, "click", function(event){
-         var position = {lat:event.latLng.lat(), lng:event.latLng.lng()}
-         this.addMarker(position);
-          return isClose(position, correctAnswer);
-       }.bind(this))
+    google.maps.event.addListener(this.googleMap, "click", function(event){
+      var position = {lat:event.latLng.lat(), lng:event.latLng.lng()}
+      this.addMarker(position);
+      this.guess = this.isClose(position, correctAnswer);
+    }.bind(this))
+    return this.guess;
    },
-   isClose: function(guess, answer){
-    
-   }
+  isClose: function(guess, answer){
+    var diffLat = Math.abs(guess.lat - answer.lat);
+    var diffLng = Math.abs(guess.lng - answer.lng);
+    console.log(diffLat);
+    console.log(diffLng);
+    if(diffLat < 20){
+      if(diffLng < 20){
+        return true;
+      }
+    }
+    return false;
+  }
 }

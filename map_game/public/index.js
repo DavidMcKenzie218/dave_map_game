@@ -1,6 +1,27 @@
+var textCreate = function(text){
+  var pTag = document.createElement("p");
+  pTag.innerText = text
+  return pTag;
+}
+
+var textToPage = function(pTag){
+  document.body.appendChild(pTag);
+}
+
+var winner = function(){
+  var winner = "Well Done, You have guessed correctly"
+  var congratulationText = textCreate(winner);
+  textToPage(congratulationText);
+}
+
 var playGame = function(latLng, guessMap){
   var correctAnswer = latLng;
-  guessMap.addClickEvent(correctAnswer);
+  var guess;
+  window.onclick = function(){
+    guess = guessMap.addClickEvent(correctAnswer);
+    if(guess) winner();
+  }
+  
 }
 
 var newLocation = function(countryList, playerMap, guessMap){
