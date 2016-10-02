@@ -6,16 +6,27 @@ var Map = function(container, coords, zoom, scroll){
     disableDefaultUI: true
   });
   this.googleMap.setOptions({draggable: true, zoomControl: scroll, scrollwheel: scroll, disableDoubleClickZoom: true});
+  
+}
 
-  this.centerAt = function(destLat, destLng){
-    this.googleMap.setCenter({lat:destLat, lng:destLng});
-  }
-
-  this.addMarker = function(input){
+Map.prototype = {
+  centerAt: function(destLat, destLng){
+      this.googleMap.setCenter({lat:destLat, lng:destLng});
+    },
+  addMarker: function(input){
     var marker = new google.maps.Marker({
-      position: {lat: input.latlng[0], lng: input.latlng[1]},
+      position: {lat: input.lat, lng: input.lng},
       map: this.googleMap
     });
-  }
-
+  },
+  addClickEvent: function(correctAnswer){
+       google.maps.event.addListener(this.googleMap, "click", function(event){
+         var position = {lat:event.latLng.lat(), lng:event.latLng.lng()}
+         this.addMarker(position);
+          return isClose(position, correctAnswer);
+       }.bind(this))
+   },
+   isClose: function(guess, answer){
+    
+   }
 }

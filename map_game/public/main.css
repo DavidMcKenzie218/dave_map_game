@@ -1,18 +1,18 @@
 #player-map {
-  width: 500px;
-  height: 500px;
+  width: 525px;
+  height: 700px;
   position: relative;
   float: left;
 }
 
 #guess-map {
-  width: 500px;
-  height: 500px;
+  width: 525px;
+  height: 700px;
   position: relative;
   float: right;
   margin-right:10%;
 }
 
 #Start {
-  margin-left: 3%;
+  margin-left: 2%;
 }

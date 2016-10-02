@@ -1,13 +1,15 @@
-var playGame = function(){
-  console.log("PLAY");
+var playGame = function(latLng, guessMap){
+  var correctAnswer = latLng;
+  guessMap.addClickEvent(correctAnswer);
 }
 
-var newLocation = function(countryList, map){
+var newLocation = function(countryList, playerMap, guessMap){
   var location = countryList.newLocation();
   var lat = location.latlng[0];
   var lng = location.latlng[1];
-  map.centerAt(lat, lng);
-  playGame();
+  playerMap.centerAt(lat, lng);
+  var correctLatLng = {lat, lng};
+  playGame(correctLatLng, guessMap);
 }
 
 var buttonCreate = function(name){
@@ -35,7 +37,7 @@ var setupGame = function(countries){
   buttonToPage(startButton);
 
   startButton.onclick = function(){
-    newLocation(countryList, playerMap);
+    newLocation(countryList, playerMap, guessMap);
   }
 }
 
